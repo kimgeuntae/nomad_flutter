@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+import 'package:toonflix/models/webtoon_model.dart';
 
 class ApiService {
   final String baseUrl = "https://webtoon-crawler.nomadcoders.workers.dev";
@@ -10,7 +13,13 @@ class ApiService {
 
     // response 성공시
     if (response.statusCode == 200) {
-      print(response.body);
+      final webtoons = jsonDecode(response.body);
+
+      for (var webtoon in webtoons) {
+        final toon = WebtoonModel.fromJson(webtoon);
+        print(toon.title);
+      }
+
       return;
     }
     throw Error();
