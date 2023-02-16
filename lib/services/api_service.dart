@@ -8,6 +8,7 @@ class ApiService {
   final String today = 'today';
 
   void getTodaysToons() async {
+    List<WebtoonModel> webtoonInstances = [];
     final url = Uri.parse('$baseUrl/$today');
     final response = await http.get(url);
 
@@ -16,8 +17,7 @@ class ApiService {
       final webtoons = jsonDecode(response.body);
 
       for (var webtoon in webtoons) {
-        final toon = WebtoonModel.fromJson(webtoon);
-        print(toon.title);
+        webtoonInstances.add(WebtoonModel.fromJson(webtoon));
       }
 
       return;
